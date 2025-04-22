@@ -1,12 +1,12 @@
-name: Run and Commit Output
+name: 60-Minute Loop Time Commit
 
 on:
-  workflow_dispatch:  # 可手動觸發
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # 每天午夜執行一次
+    - cron: '0 * * * *'  # 每小時執行一次，可調整
 
 jobs:
-  run-script-and-commit:
+  long-loop:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,14 +18,21 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Run test.js
-        run: node test.js
-
-      - name: Commit output.txt to repo
+      - name: Run test.js and commit in 60-loop
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add output.txt
-          git commit -m "Update output.txt from GitHub Actions" || echo "No changes to commit"
-          git push
+          for i in {1..60}
+          do
+            echo "⏳ 第 $i 次執行，時間：$(date -u)"
+
+            node test.js
+
+            git add output.txt
+            git commit -m "第 $i 次 ⏰ Update time output from GitHub Actions" || echo "✅ 沒有變化可提交"
+            git push || echo "🔒 Push 失敗"
+
+            echo "🕒 等待 60 秒..."
+            sleep 60
+          done
