@@ -1,0 +1,21 @@
+name: Run JavaScript Script
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜 12 點執行，使用 cron 表達式
+  workflow_dispatch:  # 允許手動觸發工作流
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 作為運行環境
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+
+
+      - name: Run test.js script
+        run: node worker.js  # 使用 Node.js 執行 test.js
