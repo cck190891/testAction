@@ -13,8 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Make test.js executable
-        run: chmod +x test.js  # 設定檔案可執行
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # 設定 Node.js 版本
 
       - name: Run test.js script
-        run: ./test.js  # 執行 test.js
+        run: node test.js  # 使用 Node.js 執行 test.js
