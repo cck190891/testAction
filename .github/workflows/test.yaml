@@ -31,7 +31,7 @@ jobs:
 
             git add output.txt
             git commit -m "第 $i 次 ⏰ Update time output from GitHub Actions" || echo "✅ 沒有變化可提交"
-            git push || echo "🔒 Push 失敗"
+            git push --force || echo "🔒 Push 失敗"
 
             echo "🕒 等待 60 秒..."
             sleep 60
