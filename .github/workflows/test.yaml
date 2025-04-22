@@ -1,4 +1,5 @@
-name: Run JavaScript Script
+name: worker
+
 
 on:
   schedule:
